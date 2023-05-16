@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpiderProceduralAnimation : MonoBehaviour
+public class ProceduralAnimation : MonoBehaviour
 {
     public Transform[] legTargets;
     public float stepSize = 0.15f;
@@ -50,6 +50,7 @@ public class SpiderProceduralAnimation : MonoBehaviour
         defaultLegPositions = new Vector2[nbLegs];
         lastLegPositions = new Vector2[nbLegs];
         legMoving = new bool[nbLegs];
+        //++i -> increment is made before the value is assigned whereas i++ assign the value then increments
         for (int i = 0; i < nbLegs; ++i)
         {
             defaultLegPositions[i] = legTargets[i].localPosition;

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
-public class Tentacles2 : MonoBehaviour
+public class TailAndExtras : MonoBehaviour
 {
     public int length;
     public LineRenderer lineRend;
@@ -12,6 +13,7 @@ public class Tentacles2 : MonoBehaviour
     public Transform targetDir;
     public float targetDist;
     public float smoothSpeed;
+    public float trailSpeed;
 
     public float wiggleSpeed;
     public float wiggleMagnitude;
@@ -21,7 +23,7 @@ public class Tentacles2 : MonoBehaviour
     void Start()
     {
         lineRend.positionCount = length;
-        segmentPoses = new Vector3[length];
+        segmentPoses= new Vector3[length];
         segmentV = new Vector3[length];
 
     }
@@ -34,8 +36,7 @@ public class Tentacles2 : MonoBehaviour
 
         for (int i = 1; i < segmentPoses.Length; i++)
         {
-            Vector3 targetPos = segmentPoses[i - 1] + (segmentPoses[i] - segmentPoses[i - 1]).normalized * targetDist;
-            segmentPoses[i] = Vector3.SmoothDamp(segmentPoses[i], targetPos, ref segmentV[i], smoothSpeed);
+            segmentPoses[i] = Vector3.SmoothDamp(segmentPoses[i], segmentPoses[i - 1] + targetDir.right * targetDist, ref segmentV[i], smoothSpeed + i / trailSpeed);
         }
         lineRend.SetPositions(segmentPoses);
     }
